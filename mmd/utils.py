@@ -4,14 +4,16 @@
 from typing import Optional
 
 import numpy as np
+from numba import njit
 
 SMALL_POSITIVE = 1e-10
 DEFAULT_VALUE = 1
 
 
+@njit
 def project(x: np.ndarray) -> np.ndarray:
     """Project `x` to simplex, enforces minimum value for numerical stability"""
-    assert np.all(np.logical_or(x > 0, np.isclose(x, 0)))
+    # assert np.all(np.logical_or(x > 0, np.isclose(x, 0)))
     x = np.maximum(x, SMALL_POSITIVE)
     return x / x.sum()
 
